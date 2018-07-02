@@ -6,13 +6,13 @@
 #' @description 
 #' Density, distribution function, quantile function, 
 #' random generation and hazard function for the odd weibull distribution with
-#' parameters \code{mu}, \code{theta} and \code{nu}.
+#' parameters \code{mu}, \code{}} and \code{nu}.
 #' 
 #' @param x,q	vector of quantiles.
 #' @param p vector of probabilities.
 #' @param n number of observations. 
 #' @param mu parameter one.    
-#' @param theta parameter two.
+#' @param sigma parameter two.
 #' @param nu parameter three.        
 #' @param log,log.p	logical; if TRUE, probabilities p are given as log(p).	
 #' @param lower.tail logical; if TRUE (default), probabilities are 
@@ -22,7 +22,7 @@
 #' The generalized power weibull with parameters \code{mu}, \code{theta}
 #' and \code{nu} has density given by
 #' 
-#' f(x) = mu*theta*nu*x^(theta-1)*exp(mu*(x^theta))*(exp(mu*(x^theta))-1)^(nu-1)*(1+(exp(mu*(x^theta))-1)^nu)^-2
+#' f(x) = mu*theta*nu*x^(sigma-1)*exp(mu*(x^sigma))*(exp(mu*(x^sigma))-1)^(nu-1)*(1+(exp(mu*(x^sigma))-1)^nu)^-2
 #'
 #' for x > 0.
 #' 
@@ -177,19 +177,19 @@ OW <- function (mu.link = "log", sigma.link = "log", nu.link = "log")
 }
 #' @export
 #' @rdname OW
-dOW<-function(x,mu,theta,nu, log = FALSE){
+dOW<-function(x,mu,sigma,nu, log = FALSE){
   if (any(x<0)) 
     stop(paste("x must be positive", "\n", ""))
   if (any(mu<=0 )) 
     stop(paste("mu must be positive", "\n", ""))
-  if (any(theta<=0)) 
-    stop(paste("theta must be positive", "\n", ""))
+  if (any(sigma<=0)) 
+    stop(paste("sigma must be positive", "\n", ""))
   if (any(nu<=0)) 
     stop(paste("nu must be positive", "\n", ""))
   
-  loglik<- log(mu) +log(theta) + log(nu) + (theta-1)*log(x) +
-    mu*(x^theta) + (nu-1)*log(exp(mu*(x^theta))-1) -
-    2*log(1+(exp(mu*(x^theta))-1)^nu)
+  loglik<- log(mu) +log(sigma) + log(nu) + (sigma-1)*log(x) +
+    mu*(x^sigma) + (nu-1)*log(exp(mu*(x^sigma))-1) -
+    2*log(1+(exp(mu*(x^sigma))-1)^nu)
   
   if (log == FALSE) 
     density<- exp(loglik)
@@ -200,17 +200,17 @@ dOW<-function(x,mu,theta,nu, log = FALSE){
 
 #' @export
 #' @rdname OW
-pOW <- function(q,mu,theta,nu, lower.tail=TRUE, log.p = FALSE){
+pOW <- function(q,mu,sigma,nu, lower.tail=TRUE, log.p = FALSE){
   if (any(q<0)) 
     stop(paste("q must be positive", "\n", ""))
   if (any(mu<=0 )) 
     stop(paste("mu must be positive", "\n", ""))
-  if (any(theta<=0)) 
-    stop(paste("theta must be positive", "\n", ""))
+  if (any(sigma<=0)) 
+    stop(paste("sigma must be positive", "\n", ""))
   if (any(nu<=0)) 
     stop(paste("nu must be positive", "\n", ""))
   
-  cdf <- 1 - (1 + (exp(mu*(q^theta))-1)^nu )^(-1)
+  cdf <- 1 - (1 + (exp(mu*(q^sigma))-1)^nu )^(-1)
   if (lower.tail == TRUE) 
     cdf <- cdf
   else cdf <- 1 - cdf
@@ -222,12 +222,12 @@ pOW <- function(q,mu,theta,nu, lower.tail=TRUE, log.p = FALSE){
 
 #' @export
 #' @rdname OW
-qOW <- function(p,mu,theta,nu, lower.tail = TRUE, log.p = FALSE){
+qOW <- function(p,mu,sigma,nu, lower.tail = TRUE, log.p = FALSE){
   
   if (any(mu<=0 )) 
     stop(paste("mu must be positive", "\n", ""))
-  if (any(theta<=0)) 
-    stop(paste("theta must be positive", "\n", ""))
+  if (any(sigma<=0)) 
+    stop(paste("sigma must be positive", "\n", ""))
   if (any(nu<=0)) 
     stop(paste("nu must be positive", "\n", ""))
   
@@ -240,40 +240,40 @@ qOW <- function(p,mu,theta,nu, lower.tail = TRUE, log.p = FALSE){
   if (any(p < 0) | any(p > 1)) 
     stop(paste("p must be between 0 and 1", "\n", ""))
   
-  q <- {(1/mu)*log(1+(-1 + (1-p)^(-1))^(1/nu))}^(1/theta)
+  q <- {(1/mu)*log(1+(-1 + (1-p)^(-1))^(1/nu))}^(1/sigma)
   q
 }
 
 #' @export
 #' @rdname OW
-rOW <- function(n,mu,theta,nu){
+rOW <- function(n,mu,sigma,nu){
   if(any(n<=0))
     stop(paste("n must be positive","\n",""))
   if (any(mu<=0 )) 
     stop(paste("mu must be positive", "\n", ""))
-  if (any(theta<=0)) 
-    stop(paste("theta must be positive", "\n", ""))
+  if (any(sigma<=0)) 
+    stop(paste("sigma must be positive", "\n", ""))
   if (any(nu<=0)) 
     stop(paste("nu must be positive", "\n", ""))
   
   n <- ceiling(n)
   p <- runif(n)
-  r <- qOW(p,mu,theta,nu)
+  r <- qOW(p,mu,sigma,nu)
   r
 }
 #' @export
 #' @rdname OW
-hOW<-function(x,mu,theta,nu){
+hOW<-function(x,mu,sigma,nu){
   if (any(x<0)) 
     stop(paste("x must be positive", "\n", ""))
   if (any(mu<=0 )) 
     stop(paste("mu must be positive", "\n", ""))
-  if (any(theta<=0)) 
-    stop(paste("theta must be positive", "\n", ""))
+  if (any(sigma<=0)) 
+    stop(paste("sigma must be positive", "\n", ""))
   if (any(nu<=0)) 
     stop(paste("nu must be positive", "\n", ""))
   
-  h <- dOW(x,mu,theta,nu, log = FALSE)/pOW(q=x,mu,theta,nu, lower.tail=FALSE, log.p = FALSE)
+  h <- dOW(x,mu,sigma,nu, log = FALSE)/pOW(q=x,mu,sigma,nu, lower.tail=FALSE, log.p = FALSE)
   h
 }
 
