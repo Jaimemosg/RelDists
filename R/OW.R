@@ -187,7 +187,7 @@ dOW<-function(x,mu,sigma,nu, log = FALSE){
   #if (any(nu<=0)) 
   #  stop(paste("nu must be positive", "\n", ""))
   
-  loglik<- log(mu) +log(sigma) + log(nu) + (sigma-1)*log(x) +
+  loglik<- log(mu) +log(sigma*nu) + (sigma-1)*log(x) +
     mu*(x^sigma) + (nu-1)*log(exp(mu*(x^sigma))-1) -
     2*log(1+(exp(mu*(x^sigma))-1)^nu)
   
