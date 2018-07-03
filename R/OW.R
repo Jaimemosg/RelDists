@@ -182,10 +182,10 @@ dOW<-function(x,mu,sigma,nu, log = FALSE){
     stop(paste("x must be positive", "\n", ""))
   if (any(mu<=0 )) 
     stop(paste("mu must be positive", "\n", ""))
-  if (any(sigma<=0)) 
-    stop(paste("sigma must be positive", "\n", ""))
-  if (any(nu<=0)) 
-    stop(paste("nu must be positive", "\n", ""))
+  #if (any(sigma<=0)) 
+  #  stop(paste("sigma must be positive", "\n", ""))
+  #if (any(nu<=0)) 
+  #  stop(paste("nu must be positive", "\n", ""))
   
   loglik<- log(mu) +log(sigma) + log(nu) + (sigma-1)*log(x) +
     mu*(x^sigma) + (nu-1)*log(exp(mu*(x^sigma))-1) -
@@ -205,10 +205,10 @@ pOW <- function(q,mu,sigma,nu, lower.tail=TRUE, log.p = FALSE){
     stop(paste("q must be positive", "\n", ""))
   if (any(mu<=0 )) 
     stop(paste("mu must be positive", "\n", ""))
-  if (any(sigma<=0)) 
-    stop(paste("sigma must be positive", "\n", ""))
-  if (any(nu<=0)) 
-    stop(paste("nu must be positive", "\n", ""))
+  #if (any(sigma<=0)) 
+  #  stop(paste("sigma must be positive", "\n", ""))
+  #if (any(nu<=0)) 
+  #  stop(paste("nu must be positive", "\n", ""))
   
   cdf <- 1 - (1 + (exp(mu*(q^sigma))-1)^nu )^(-1)
   if (lower.tail == TRUE) 
@@ -226,10 +226,10 @@ qOW <- function(p,mu,sigma,nu, lower.tail = TRUE, log.p = FALSE){
   
   if (any(mu<=0 )) 
     stop(paste("mu must be positive", "\n", ""))
-  if (any(sigma<=0)) 
+ #if (any(sigma<=0)) 
     stop(paste("sigma must be positive", "\n", ""))
-  if (any(nu<=0)) 
-    stop(paste("nu must be positive", "\n", ""))
+  #if (any(nu<=0)) 
+  #  stop(paste("nu must be positive", "\n", ""))
   
   if (log.p == TRUE) 
     p <- exp(p)
@@ -251,10 +251,10 @@ rOW <- function(n,mu,sigma,nu){
     stop(paste("n must be positive","\n",""))
   if (any(mu<=0 )) 
     stop(paste("mu must be positive", "\n", ""))
-  if (any(sigma<=0)) 
-    stop(paste("sigma must be positive", "\n", ""))
-  if (any(nu<=0)) 
-    stop(paste("nu must be positive", "\n", ""))
+  #if (any(sigma<=0)) 
+  #  stop(paste("sigma must be positive", "\n", ""))
+  #if (any(nu<=0)) 
+  #  stop(paste("nu must be positive", "\n", ""))
   
   n <- ceiling(n)
   p <- runif(n)
@@ -268,10 +268,10 @@ hOW<-function(x,mu,sigma,nu){
     stop(paste("x must be positive", "\n", ""))
   if (any(mu<=0 )) 
     stop(paste("mu must be positive", "\n", ""))
-  if (any(sigma<=0)) 
-    stop(paste("sigma must be positive", "\n", ""))
-  if (any(nu<=0)) 
-    stop(paste("nu must be positive", "\n", ""))
+  #if (any(sigma<=0)) 
+  #  stop(paste("sigma must be positive", "\n", ""))
+  #if (any(nu<=0)) 
+  #  stop(paste("nu must be positive", "\n", ""))
   
   h <- dOW(x,mu,sigma,nu, log = FALSE)/pOW(q=x,mu,sigma,nu, lower.tail=FALSE, log.p = FALSE)
   h
