@@ -227,9 +227,9 @@ qOW <- function(p,mu,sigma,nu, lower.tail = TRUE, log.p = FALSE){
   if (any(mu<=0 )) 
     stop(paste("mu must be positive", "\n", ""))
  #if (any(sigma<=0)) 
-    stop(paste("sigma must be positive", "\n", ""))
-  #if (any(nu<=0)) 
-  #  stop(paste("nu must be positive", "\n", ""))
+ #   stop(paste("sigma must be positive", "\n", ""))
+ #if (any(nu<=0)) 
+ #   stop(paste("nu must be positive", "\n", ""))
   
   if (log.p == TRUE) 
     p <- exp(p)
